@@ -1,0 +1,31 @@
+{
+  "name": "food-app",
+  "version": "1.0.0",
+  "description": "This is the Resturant food app ",
+  "keywords": [
+    "node",
+    "js",
+    "backend",
+    "mongoDB",
+    "food",
+    "app"
+  ],
+  "license": "ISC",
+  "author": "Rehan Sheikh",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.5",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
