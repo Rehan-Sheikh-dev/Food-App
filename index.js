@@ -4,8 +4,10 @@ import dotenv from "dotenv"
 import DbConnect from "./db/db.js";
 import { fileURLToPath } from "url";
 import path from "path";
+import chalk from "chalk";
+import cors from "cors"
 
-dotenv.config();
+dotenv.config({path:'./.env'});
 
 (async()=>{
     try {
@@ -24,11 +26,12 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
+app.use(cors())
 
 app.get("/",(req,res)=>{
     res.send("<h1>This is the Home Page.</h1>")
 })
 
 app.listen(process.env.PORT,function(){
-    console.log(`Server is running on port ${process.env.PORT}`)
+    console.log(chalk.white.bgGreen.bold((`Server is running on port ${process.env.PORT}`)))
 })

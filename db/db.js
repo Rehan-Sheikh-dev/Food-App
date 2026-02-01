@@ -7,5 +7,4 @@ const DbConnect = async () => {
         console.log("MongoDb connection failed:",error);
     }
 }
-
 export default DbConnect;
