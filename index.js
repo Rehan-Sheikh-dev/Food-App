@@ -6,8 +6,11 @@ import { fileURLToPath } from "url";
 import path from "path";
 import chalk from "chalk";
 import cors from "cors"
+import auth from "./routes/auth.routes.js"
 
 dotenv.config({path:'./.env'});
+
+// create controller of user
 
 (async()=>{
     try {
@@ -25,8 +28,10 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(cookieParser())
-app.use(cors())
+app.use(express.static(path.join(__dirname,'public')));
+app.use(cookieParser());
+app.use(cors());
+app.use("/user",auth)
 
 app.get("/",(req,res)=>{
     res.send("<h1>This is the Home Page.</h1>")
