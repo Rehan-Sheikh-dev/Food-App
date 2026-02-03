@@ -7,6 +7,7 @@ import path from "path";
 import chalk from "chalk";
 import cors from "cors"
 import auth from "./routes/auth.routes.js"
+import user from "./routes/user.routes.js"
 
 dotenv.config({path:'./.env'});
 
@@ -31,7 +32,9 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,'public')));
 app.use(cookieParser());
 app.use(cors());
-app.use("/user",auth)
+app.use("/auth",auth);
+app.use("/user",user);
+
 
 app.get("/",(req,res)=>{
     res.send("<h1>This is the Home Page.</h1>")
