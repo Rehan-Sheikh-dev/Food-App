@@ -25,3 +25,13 @@ export const loginMiddleWare = async (req, res,next) => {
         res.status(500).send({ message: "something went wrong" })
     }
 }
+
+export const logoutMiddleWare = async (req,res,next) => {
+    const user = req.user.token;
+    if(!user) return res.status(500).send(
+        {
+            message:"User Loggedin First!!",
+            success:false
+        }
+    )
+}

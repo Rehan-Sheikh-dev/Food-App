@@ -35,3 +35,12 @@ export const loginUser = async (req, res) => {
    console.log(req.cookies.token)
    res.status(201).send({ message: "User loggedin successfully!", data: user });
 }
+
+export const logoutUser = async (req,res) => {
+   req.cookie("token","");
+   res.status(201).send({
+      message:"User Logout Successfully!!",
+      success:true,
+      user
+   })
+}
