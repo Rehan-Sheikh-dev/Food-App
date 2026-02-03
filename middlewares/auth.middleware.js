@@ -9,7 +9,7 @@ export const registerMiddleWare = async (req, res, next) => {
         }
         const findUser = await userModel.findOne({ email });
         if (findUser) return res.status(401).send({ message: "User Already Exist!" })
-        next()
+        next();
     } catch (error) {
         res.status(500).send(error);
     }

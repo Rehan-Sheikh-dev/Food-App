@@ -13,7 +13,7 @@ export const createdUser = async (req, res) => {
          phone,
          address
       })
-      const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET_KEY)
+      const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET_KEY,{expiresIn:'7d'})
       res.cookie("token", token, { httpOnly: true })
       res.status(201).send({ message: "User created successfully!!", data: user })
 
