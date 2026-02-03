@@ -1,5 +1,4 @@
 import userModel from "../models/user.model.js";
-import jwt from "jsonwebtoken";
 
 export const registerMiddleWare = async (req, res, next) => {
     try {
@@ -28,20 +27,8 @@ export const loginMiddleWare = async (req, res, next) => {
 }
 
 
-export const logoutMiddleWare = async (req, res, next) => {
-    console.log(req.user)
-    try {
-        if (!req.user) {
-            return res.status(401).send({
-                message: "Please login first!",
-                success: false
-            })
-        }
-        next();
-    } catch (error) {
-        return res.status(500).send({
-            message: "Internal Server Error",
-            success: false
-        })
-    }
+export const checkLoginMiddleware = async (req, res, next) => {
+    const token = req.cookies.token; 
+  if(!token) return res.status(401).send("Unexpected aur invalid token");
+    next()
 }

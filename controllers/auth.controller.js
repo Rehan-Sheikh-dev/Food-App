@@ -36,14 +36,33 @@ export const loginUser = async (req, res) => {
       secure: false,
       sameSite: "lax"
    });
-   console.log(req.cookies.token)
    res.status(201).send({ message: "User loggedin successfully!", data: user });
 }
 
 export const logoutUser = async (req, res) => {
-   req.clearCookie("token");
-   res.status(201).send({
-      message: "User Logout Successfully!!",
-      success: true,
-   })
+   res.cookie("token",""); ;
+  res.status(201).send({message:"User logout successfully!!"})
 }
+
+export const resetUserPassword = async (req,res) => {
+   try {
+      const {email,password,newPassword} = req.body;
+
+      if(!email || !password || !newPassword) return res.status(502).send("All fields are required!!");
+
+      const user = await userModel.findOne({email});
+      if(!user) return res.status(401).send({
+         message:"User not found!!",
+         success:true
+      })
+       confirm
+   } catch (error) {
+      res.status(500).send(
+         {
+            message:"user Password reset failed!",
+            success:false,
+            error
+         }
+      )
+   }
+} 
