@@ -1,5 +1,5 @@
 import userModel from "../models/user.model.js";
-import bcrypt from "bcrypt";
+import bcrypt, { hash } from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const createdUser = async (req, res) => {
@@ -46,23 +46,26 @@ export const logoutUser = async (req, res) => {
 
 export const resetUserPassword = async (req,res) => {
    try {
-      const {email,password,newPassword} = req.body;
-
-      if(!email || !password || !newPassword) return res.status(502).send("All fields are required!!");
-
+      const {email,newPassword} = req.body;
+      if(!email || !newPassword ) return res.status(502).send("All fields are required!!");
       const user = await userModel.findOne({email});
       if(!user) return res.status(401).send({
          message:"User not found!!",
          success:true
       })
-       confirm
+       const salt = bcrypt.genSaltSync(12);
+       const hashPassword = await bcrypt.hash(newPassword,salt);
+       user.password = hashPassword;
+       await user.save()
+         res.status(200).send({
+         message: "Password reset successfully!",
+         success: true  
+      });
    } catch (error) {
-      res.status(500).send(
-         {
+      res.status(500).send({
             message:"user Password reset failed!",
             success:false,
             error
-         }
-      )
+         })
    }
 } 

@@ -2,7 +2,8 @@ import express from "express"
 import {
     createdUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    resetUserPassword
 }
     from "../controllers/auth.controller.js";
 import {
@@ -16,6 +17,6 @@ const app = express.Router()
 app.post('/register', registerMiddleWare, createdUser)
 app.post('/login', loginMiddleWare, loginUser)
 app.post('/logout', checkLoginMiddleware, logoutUser)
-app.post('/resetPassword', checkLoginMiddleware,)
+app.post('/resetPassword', checkLoginMiddleware,resetUserPassword)
 
 export default app; 
