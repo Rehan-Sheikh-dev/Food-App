@@ -56,7 +56,7 @@ export const resetUserPassword = async (req,res) => {
        const salt = bcrypt.genSaltSync(12);
        const hashPassword = await bcrypt.hash(newPassword,salt);
        user.password = hashPassword;
-       await user.save()
+       await user.save();
          res.status(200).send({
          message: "Password reset successfully!",
          success: true  
