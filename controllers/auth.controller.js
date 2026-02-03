@@ -13,7 +13,7 @@ export const createdUser = async (req, res) => {
          phone,
          address
       })
-      const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET_KEY,{expiresIn:'7d'})
+      const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET_KEY, { expiresIn: '7d' })
       res.cookie("token", token, { httpOnly: true })
       res.status(201).send({ message: "User created successfully!!", data: user })
 
@@ -27,20 +27,23 @@ export const loginUser = async (req, res) => {
    const { email, password } = req.body;
    const user = await userModel.findOne({ email });
    if (!user) return res.status(401).send({ message: "User doesn't exist!" });
-  const result = await bcrypt.compare(password, user.password);
-      if (!result) return res.status(401).send("Password is incorrect!!");
-    user.password=undefined
+   const result = await bcrypt.compare(password, user.password);
+   if (!result) return res.status(401).send("Password is incorrect!!");
+   user.password = undefined
    const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET_KEY);
-   res.cookie("token", token);
+   res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax"
+   });
    console.log(req.cookies.token)
    res.status(201).send({ message: "User loggedin successfully!", data: user });
 }
 
-export const logoutUser = async (req,res) => {
-   req.cookie("token","");
+export const logoutUser = async (req, res) => {
+   req.clearCookie("token");
    res.status(201).send({
-      message:"User Logout Successfully!!",
-      success:true,
-      user
+      message: "User Logout Successfully!!",
+      success: true,
    })
 }
