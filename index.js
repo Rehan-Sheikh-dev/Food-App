@@ -11,8 +11,6 @@ import user from "./routes/user.routes.js"
 
 dotenv.config({path:'./.env'});
 
-// create controller of user
-
 (async()=>{
     try {
         await DbConnect(); 
